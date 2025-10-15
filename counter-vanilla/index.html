@@ -14,80 +14,54 @@
         <button id="incrementAsync">Increment async</button>
       </p>
     </div>
+
     <script>
-
-      // write function here
-        function counter (state, action){
-          if (typeof state === 'undefined') {
-            return 0
-          }
-          switch (action.type) {
-            case 'INCREMENT':
-              return state + 1
-            case 'DECREMENT':
-              return state - 1
-              default:
-                return state
-          }
+      // reducer
+      function counter(state, action) {
+        if (typeof state === 'undefined') {
+          return 0
         }
-      
-    
-
-      // setup variables and render function here
-        var store = Redux.createStore(counter)
-        var valueEI = document.getElementsById('value')
-
-        function render(){
-          valueEI.innerHTML = store.getState().toString()
+        switch (action.type) {
+          case 'INCREMENT':
+            return state + 1
+          case 'DECREMENT':
+            return state - 1
+          default:
+            return state
         }
+      }
 
-        render ()
-        store.subscribe(render)
+      // create store
+      var store = Redux.createStore(counter)
+      var valueEl = document.getElementById('value')
 
-        document.getElementById('increment')
-      .addEventListener('click', function() {
-        store.dispatch ({type: 'INCREMENT'})
+      function render() {
+        valueEl.innerHTML = store.getState().toString()
+      }
+
+      render()
+      store.subscribe(render)
+
+      // event listeners
+      document.getElementById('increment').addEventListener('click', function() {
+        store.dispatch({ type: 'INCREMENT' })
       })
 
-      document.getElementById('decrement')
-      .addEventListener('click', function() {
-        store.dispatch ({type: 'DeCREMENT'})
-      })
-        document.getElementById('incrementIfOdd')
-      .addEventListener('click', function() {
-        if (store.getState () % 2 !==0){
-          store.dispatch ({type: 'INCREMENT'})
-        }
-        store.dispatch ({type: 'INCREMENT'})
+      document.getElementById('decrement').addEventListener('click', function() {
+        store.dispatch({ type: 'DECREMENT' })
       })
 
-      document.getElementById('incrementAsync')
-      .addEventListener('click', function() {
+      document.getElementById('incrementIfOdd').addEventListener('click', function() {
+        if (store.getState() % 2 !== 0) {
+          store.dispatch({ type: 'INCREMENT' })
+        }
+      })
+
+      document.getElementById('incrementAsync').addEventListener('click', function() {
         setTimeout(function() {
-          store.dispatch ({type: 'INCREMENT'})
+          store.dispatch({ type: 'INCREMENT' })
         }, 1000)
       })
-
-
-      // setup document tags here
-      document.getElementById('increment')
-      .addEventListener('click', function() {
-        store.dispatch ({type: 'INCREMENT'})
-      }) 
-
-      document.getElementById('decrement')
-      .addEventListener('click', function() {
-        store.dispatch ({type: 'DECREMENT'})
-      }) 
-
-      document.getElementById('incrementIfOdd')
-      .addEventListener('click', function() {
-        if (store.getState() % 2 !==0){
-          store.dispatch ({type: 'INCREMENT'})
-        } 
-      }) 
-
-        
     </script>
   </body>
 </html>
